@@ -1,0 +1,115 @@
+﻿<style>
+    .Index {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    #cssmenu {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        line-height: 1;
+    }
+
+    #cssmenu ul,
+    #cssmenu ul li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #cssmenu ul li.hover,
+    #cssmenu ul li:hover {
+        position: relative;
+        z-index: 599;
+        cursor: default;
+    }
+
+    #cssmenu {
+        width: 200px;
+        height: 720px;
+        margin-top: 10px;
+        margin-left: 20px;
+        background-color: darkgrey;
+        font-family: sans-serif;
+        font-weight: bold;
+        zoom: 1;
+        font-size: 12px;
+    }
+
+    #cssmenu:before {
+        content: '';
+        display: block;
+    }
+
+    #cssmenu:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    #cssmenu a {
+        display: block;
+        padding: 15px 20px;
+        height: 80px;
+        color: #f26724;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 1px solid #ffffff;
+    }
+
+    #cssmenu > ul {
+        width: 200px;
+    }
+
+    #cssmenu > ul > li > a {
+        border-left: 4px solid #095586;
+        color: #095586;
+    }
+
+    #cssmenu > ul > li a:hover {
+        background: #095586;
+        color: #f1f1f1;
+    }
+
+    #cssmenu2 {
+        width: 1250px;
+        height: 720px;
+        background-color: cadetblue;
+        font-family: sans-serif;
+        font-weight: bold;
+        zoom: 1;
+        font-size: 12px;
+        margin-top: -740px;
+        margin-left: 230px
+    }
+
+
+</style>
+
+
+
+<div class="Index">
+
+    <login ng-if="!vm.IsLogon"></login>
+    <div ng-if="vm.IsLogon">
+
+        <div id='cssmenu'>
+            <ul>
+
+
+                <li><a href="#!/menu/">Menu</a></li>
+                <li><a href="#!/students/">Students</a></li>
+                <li><a href="#!/subjects/">Subjects</a></li>
+                <li><a href="#!/exams/">Exams</a></li>
+
+            </ul>
+
+        </div>
+        <div id='cssmenu2'>
+            <div ng-view></div>
+        </div>
+    </div>
+</div>
+

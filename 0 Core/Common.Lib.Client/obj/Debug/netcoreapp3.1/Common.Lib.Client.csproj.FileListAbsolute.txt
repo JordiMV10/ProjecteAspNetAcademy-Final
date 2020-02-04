@@ -1,0 +1,11 @@
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\bin\Debug\netcoreapp3.1\Common.Lib.Client.deps.json
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\bin\Debug\netcoreapp3.1\Common.Lib.Client.dll
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\bin\Debug\netcoreapp3.1\Common.Lib.Client.pdb
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\bin\Debug\netcoreapp3.1\Common.Lib.dll
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\bin\Debug\netcoreapp3.1\Common.Lib.pdb
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.csprojAssemblyReference.cache
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.AssemblyInfoInputs.cache
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.AssemblyInfo.cs
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.csproj.CopyComplete
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.dll
+C:\Users\jordi\source\repos\ProjecteAspNetAcademyFinal\0 Core\Common.Lib.Client\obj\Debug\netcoreapp3.1\Common.Lib.Client.pdb
