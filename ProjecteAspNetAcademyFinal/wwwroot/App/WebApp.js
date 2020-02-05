@@ -14,7 +14,6 @@ app.config(['$routeProvider', function ($routeProvider)
         controllerAs: "vm"
     });
 
-
     $routeProvider.when("/students", {
         templateUrl: "./app/views/Home/menu/students/students.html",
         controller: ("students", Students),
@@ -34,8 +33,6 @@ app.config(['$routeProvider', function ($routeProvider)
     });
 
     //$routeProvider.html5Mode(true);
-
-
 
 }]);
 
