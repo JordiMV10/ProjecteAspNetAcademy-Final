@@ -72,7 +72,7 @@ namespace ProjecteAspNetAcademyFinal.Api
             return student;
         }
 
-        // PUT: api/Students
+        // PUT: api/Students/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
@@ -122,7 +122,6 @@ namespace ProjecteAspNetAcademyFinal.Api
             {
                 return student.Save();
             });
-
 
             //_context.Students.Add(student);
             //await _context.SaveChangesAsync();

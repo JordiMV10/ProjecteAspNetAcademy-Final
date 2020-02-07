@@ -5,29 +5,51 @@
     }
 
     .myGrid {
-        width: 1200px;
-        height: 300px;
-        margin-top: 130px;
-        margin-left: 25px;
+        width: 1230px;
+        height: 400px;
+        margin-top: 30px;
+        margin-left: 10px;
+    }
+
+    .btn-lg {
+        display: inline-block;
+        margin-left:10px;
+    }
+
+    .btn-block {
+        /*margin-left:205px;*/
+        /*display:inline-block;*/
+    }
+
+    .form-control {
+        margin-left:10px;
+        width:625px;
     }
 </style>
 
 <div class="Index">
 
     <h2>Students Menu</h2>
-    <input class="btn  btn-primary btn-block" type="button" value="Leer Students" ng-click="vm.GetStudents()" style="width:200px" />
+    <input class="btn btn-lg btn-primary btn-block" type="button" value="GetStudents" ng-click="vm.GetStudents()" style="width:200px" />
     <div>
         <form class="form-signin">
-            <input type="text" ng-model="vm.Dni" class="form-control" placeholder="Dni" required autofocus style="width:500px">
-            <input type="text" ng-model="vm.Name" class="form-control" placeholder="Name" required autofocus style="width:500px">
-            <input type="text" ng-model="vm.Email" class="form-control" placeholder="Email" required autofocus style="width:500px">
-            <input type="text" ng-model="vm.ChairNumber" class="form-control" placeholder="ChairNumber" required autofocus style="width:500px">
+            <input type="text" ng-model="vm.Dni" class="form-control" placeholder="Dni" required autofocus>
+            <input type="text" ng-model="vm.Name" class="form-control" placeholder="Name" required autofocus>
+            <input type="text" ng-model="vm.Email" class="form-control" placeholder="Email" required autofocus>
+            <input type="text" ng-model="vm.ChairNumber" class="form-control" placeholder="ChairNumber" required autofocus>
+            <div>
+                <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.SaveStudent()" value="SaveStudent" style="        width: 200px" />
+                <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.DelStudent()" value="DelStudent" style="width:200px" />
+                <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.EditStudent()" value="EditStudent" style="width:200px" />
 
-            <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.SaveStudent()" value="SaveStudent" style="width:200px"/>
+            </div>
+
         </form>
 
 
-        <div ui-grid="{ data: vm.Students }" class="myGrid"></div>
+        <div ui-grid="{ data: vm.Students }" class="myGrid" ></div>
+
+        <!--<div class="gridStyle" ui-grid-selection ui-grid="gridOptions"> </div>-->
 
     </div>
 

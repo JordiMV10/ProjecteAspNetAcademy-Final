@@ -1,6 +1,17 @@
 ﻿class Students
 {
 
+    get Id()
+    {
+        return this._id;
+    }
+
+    set Id(value)
+    {
+        this._id = value;
+    }
+
+
     get Dni()
     {
         return this._dni;
@@ -50,17 +61,20 @@
         this._students = value;
     }
 
-    //get Student()
-    //{
-    //    return this._student;
-    //}
-    //set Student(value)
-    //{
-    //    this._student = value;
-    //}
+
+    get SelectedRows()
+    {
+        var selectedRows = this.gridOptions.gridApi.selection.getSelectedRows();
+        return selectedRows[0];
+    }
+
+    set SelectedRows(value)
+    {
+        this._selectedRows = value;
+    }
 
 
-    //Students = [];
+    Students = [];
 
     constructor($http)
     {
@@ -82,9 +96,6 @@
     }
 
 
-
-
-
     get IsLogon()
     {
         return Globals.IsLogon;
@@ -94,26 +105,43 @@
     {
         var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
 
-            
-        this.Http.post("api/students", student).then(
-            (response) =>  {
-                if (response.data === true) {
-                this.gridOptions.data.push(response.data);
-                console.log("POST-ing of data successfully!");                      
-                    
-                }
-                   
-            },
+        this.Http.post("api/students", student).then((reponse) =>
+        {
+            if (reponse.data.isSuccess === true)  
+            {
+                //this.gridOptions.data.push(response.data);
+                this.GetStudents();
+                this.Dni = "";
+                this.Name = "";
+                this.Email = "";
+                this.ChairNumber = null;
+                console.log("POST-ing of data successfully!");
+            }
+        },
         function errorCallback(response)
         {
             console.log("POST-ing of data failed");
-        }
-
-        );
+                
+        } );
     }
 
+    DelSudents()
+    {
+        this.Http.delete("api/students", this.SelectedRows.Id).then((response) =>
+        {
+            if (response.data.isSuccess === true)
+            {
+                this.GetStudents();
+                console.log("POST-ing of data successfully!");
 
-    
+            }
+        },
+            function errorCallback(response)
+            {
+                console.log("POST-ing of data failed");
+            }
+        );
+    }
 
 
     GetStudents()
