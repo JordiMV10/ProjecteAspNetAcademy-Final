@@ -6,10 +6,6 @@
         return this._id;
     }
 
-    set Id(value)
-    {
-        this._id = value;
-    }
 
 
     get Dni()
@@ -61,12 +57,40 @@
         this._students = value;
     }
 
-
-    get SelectedRows()
+    //get Selection()
+    //{
+    //    return this._selection;
+    //}
+    //set Selection(value)
+    //{
+    //    this._selection = value;
+    //}
+    constructor($http)
     {
-        var selectedRows = this.gridOptions.gridApi.selection.getSelectedRows();
-        return selectedRows[0];
+        this._students = [];
+        this.Http = $http;
+
+        this.gridOptions = {
+            enableSorting: false,
+            enableColumnMenus: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            enableRowSelection: true,
+            enableRowHeaderSelection: true,
+            multiSelect: false,
+            data: this.Students,
+            selectedRows : [],
+            onRegisterApi: function (gridApi)
+            {
+                this.gridApi = gridApi;
+            }
+
+        }
+
     }
+
+
+
 
     set SelectedRows(value)
     {
@@ -74,26 +98,17 @@
     }
 
 
+    get SelectedRows()
+    {
+        var selectedRows = this.gridOptions.gridApi.selection.getSelectedRows();
+
+        return selectedRows[0];
+    }
+
+
+
     Students = [];
 
-    constructor($http)
-    {
-        this._students = [];
-        this.Http = $http;
-        this.gridOptions = {
-            enableColumnMenus: false,
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 0,
-            enableRowSelection: true,
-            enableRowHeaderSelection : false,
-            data: this.Students,
-            multiSelect : false,
-            onRegisterApi: function (gridApi)
-            {
-                this.gridApi = gridApi;
-            }
-        }
-    }
 
 
     get IsLogon()
@@ -125,9 +140,12 @@
         } );
     }
 
-    DelSudents()
+    DelStudent()
     {
-        this.Http.delete("api/students", this.SelectedRows.Id).then((response) =>
+        var student = new Student();
+        student = this.SelectedRows;
+
+        this.Http.delete("api/students/" + student.id).then((response) =>
         {
             if (response.data.isSuccess === true)
             {
@@ -146,6 +164,7 @@
 
     GetStudents()
     {
+        
         this.Http.get("api/students").then((response) =>
         {
             this.Students.length = 0;
@@ -159,9 +178,11 @@
 
 Students.$inject = ['$http'];
 
+
 app.
     component('students', {
         templateUrl: './App/Views/Home/Menu/Students/Students.html',
         controller: ('students', Students),
         controllerAs: 'vm'
     });
+

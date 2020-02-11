@@ -31,7 +31,9 @@
 
     <h2>Students Menu</h2>
     <input class="btn btn-lg btn-primary btn-block" type="button" value="GetStudents" ng-click="vm.GetStudents()" style="width:200px" />
-    <div>
+    <div >
+
+
         <form class="form-signin">
             <input type="text" ng-model="vm.Dni" class="form-control" placeholder="Dni" required autofocus>
             <input type="text" ng-model="vm.Name" class="form-control" placeholder="Name" required autofocus>
@@ -47,9 +49,11 @@
         </form>
 
 
-        <div ui-grid="{ data: vm.Students }" class="myGrid" ></div>
+        <!--<div ui-grid-selection class="myGrid" ui-grid="{ data: vm.Students}"></div>-->
+        <div>
 
-        <!--<div class="gridStyle" ui-grid-selection ui-grid="gridOptions"> </div>-->
+            <div class="myGrid" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-cellnav></div>
+        </div>
 
     </div>
 

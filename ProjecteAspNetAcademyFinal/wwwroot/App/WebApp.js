@@ -1,6 +1,6 @@
 ﻿var app = angular.module('WebApp',
     ['ui.bootstrap',
-        'ui.grid',
+        'ui.grid', 'ui.grid.selection', 
         'ngRoute']);
 
 var Globals = new ClientGlobals();
@@ -40,6 +40,8 @@ app.config(['$routeProvider', function ($routeProvider)
 app.controller("Students", ["$scope", function ($scope)
 {
     $scope.mensaje = "Texto cargado desde el controlador StudentsController";
+    //$scope.data = vm.Students;
+   
 }]);
 
 app.controller("Subjects", ["$scope", function ($scope)
@@ -51,3 +53,37 @@ app.controller("Menu", ["$scope", function ($scope)
 {
     $scope.mensaje = "Texto cargado desde el controlador MenuController";
 }]);
+
+
+
+//app.controller("Students", ["$scope", function ($scope)
+//{
+//    $scope.mensaje = "Texto cargado desde el controlador StudentsController";
+//    $scope.data = Students;
+//    $scope.gridOptions = {};
+//    $scope.gridOptions = {
+//        enableSorting: true,
+//        enableColumnMenus: false,
+//        enableHorizontalScrollbar: 0,
+//        enableVerticalScrollbar: 0,
+//        enableSelection: true,
+//        enableRowSelection: true,
+//        enableRowHeaderSelection: false,
+//        multiSelect: false
+//        //minRowsToShow: $scope.Students.length + 1
+//    };
+
+//    $scope.onRegisterApi = function (gridApi)
+//    {
+//        $scope.gridApi = gridApi;
+//    }
+
+//    $scope.selectRow = function (selectRow)
+//    {
+//        $scope.gridApi.selection.getSelectedRows(selectRow);
+//    };
+//    $scope.gridOptions.data = Students;
+//}]);
+
+
+
