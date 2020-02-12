@@ -57,6 +57,16 @@
         this._students = value;
     }
 
+    get IsEdit()
+    {
+        return this._isEdit;
+    }
+    set IsEdit(value)
+    {
+        this._isEdit = value;
+    }
+
+
     //get Selection()
     //{
     //    return this._selection;
@@ -71,7 +81,7 @@
         this.Http = $http;
 
         this.gridOptions = {
-            enableSorting: false,
+            enableSorting: true,
             enableColumnMenus: false,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
@@ -116,30 +126,75 @@
         return Globals.IsLogon;
     }
 
+    
+
     SaveStudent()
     {
-        var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
+        //var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
 
-       
-
-        this.Http.post("api/students", student).then((reponse) =>
+        if (this.IsEdit = true)
         {
-            if (reponse.data.isSuccess === true)  
+            var student = new Student();
+            student = this.SelectedRows;
+
+            student.dni = this.Dni;
+            student.name = this.Name;
+            student.email = this.Email;
+            student.chairNumber = this.ChairNumber;
+
+            this.Http.put("api/students/" + student.id, student).then((response) =>
             {
-                //this.gridOptions.data.push(response.data);
-                this.GetStudents();
-                this.Dni = "";
-                this.Name = "";
-                this.Email = "";
-                this.ChairNumber = null;
-                console.log("POST-ing of data successfully!");
-            }
-        },
-        function errorCallback(response)
+                if (response.data.isSuccess === true)
+                {
+                    this.GetStudents();
+                    this.Dni = "";
+                    this.Name = "";
+                    this.Email = "";
+                    this.ChairNumber = null;
+
+                    console.log("POST-ing of data successfully!");
+
+                }
+            },
+                function errorCallback(response)
+                {
+                    console.log("POST-ing of data failed");
+                }
+            );
+
+            this.IsEdit = false;
+        }
+
+
+        else 
         {
-            console.log("POST-ing of data failed");
-                
-        } );
+            var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
+
+
+
+            this.Http.post("api/students", student).then((reponse) =>
+            {
+                if (reponse.data.isSuccess === true)  
+                {
+                    //this.gridOptions.data.push(response.data);
+                    this.GetStudents();
+                    this.Dni = "";
+                    this.Name = "";
+                    this.Email = "";
+                    this.ChairNumber = null;
+                    console.log("POST-ing of data successfully!");
+                    IsEdit = false;
+                }
+            },
+                function errorCallback(response)
+                {
+                    console.log("POST-ing of data failed");
+
+                });
+            this.IsEdit = false;
+        }
+
+
     }
 
     DelStudent()
@@ -161,6 +216,7 @@
                 console.log("POST-ing of data failed");
             }
         );
+        this.IsEdit = false;
     }
 
 
@@ -172,6 +228,7 @@
         this.Name = this.SelectedRows.name;
         this.Email = this.SelectedRows.email;
         this.ChairNumber = this.SelectedRows.chairNumber;
+        this.IsEdit = true;
 
         //this.Http.put("api/students/" + student.id).then((response) =>
         //{
@@ -195,7 +252,6 @@
 
     GetStudents()
     {
-        
         this.Http.get("api/students").then((response) =>
         {
             this.Students.length = 0;
@@ -204,6 +260,8 @@
                 this.Students.push(student);
             });
         })
+
+        this.IsEdit=false;
     }
 
     ClearForm()
@@ -212,7 +270,7 @@
         this.Name = "";
         this.Email = "";
         this.ChairNumber = null;
-
+        this.IsEdit = false;
     }
 
 
