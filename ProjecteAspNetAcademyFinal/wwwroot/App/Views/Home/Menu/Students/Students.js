@@ -120,6 +120,8 @@
     {
         var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
 
+       
+
         this.Http.post("api/students", student).then((reponse) =>
         {
             if (reponse.data.isSuccess === true)  
@@ -162,6 +164,35 @@
     }
 
 
+    EditStudent()
+    {
+        //var student = new Student();
+        //student = this.SelectedRows;
+        this.Dni= this.SelectedRows.dni;
+        this.Name = this.SelectedRows.name;
+        this.Email = this.SelectedRows.email;
+        this.ChairNumber = this.SelectedRows.chairNumber;
+
+        //this.Http.put("api/students/" + student.id).then((response) =>
+        //{
+        //    if (response.data.isSuccess === true)
+        //    {
+        //        this.GetStudents();
+        //        console.log("POST-ing of data successfully!");
+
+        //    }
+        //},
+        //    function errorCallback(response)
+        //    {
+        //        console.log("POST-ing of data failed");
+        //    }
+        //);
+
+
+
+
+    }
+
     GetStudents()
     {
         
@@ -174,6 +205,18 @@
             });
         })
     }
+
+    ClearForm()
+    {
+        this.Dni = "";
+        this.Name = "";
+        this.Email = "";
+        this.ChairNumber = null;
+
+    }
+
+
+
 }
 
 Students.$inject = ['$http'];
