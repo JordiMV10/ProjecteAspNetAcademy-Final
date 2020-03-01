@@ -1,5 +1,5 @@
 ﻿var app = angular.module('WebApp',
-    ['ui.bootstrap',
+    ['ui.bootstrap', 'ngAria',
         'ui.grid', 'ui.grid.selection', 
         'ngRoute']);
 

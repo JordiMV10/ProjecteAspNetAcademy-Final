@@ -1,34 +1,32 @@
 ﻿class Subjects
 {
+    constructor(SubjectsService)
+    {
+        this.SubjectsService = SubjectsService;
+    }
     Subjects = [];
-
-
     get IsLogon()
     {
         return Globals.IsLogon;
     }
-
-    constructor($http)
-    {
-        this.Http = $http;
-    }
-
     GetSubjects()
     {
-        this.Http.get("api/subjects").then((response) =>
+        this.SubjectsService.GetAllAsync((data) =>
         {
-            this.Subjects.length = 0;
-            response.data.forEach((subject) =>
-            {
-                this.Subjects.push(subject);
-            });
-        })
+            this.LoadSubjects(data);
+        });
+        console.log ("end")
     }
-
+    LoadSubjects(subjects)
+    {
+        this.Subjects.length = 0;
+        for (let i = 0; i < subjects.length; i++)
+        {
+            this.Subjects.push(subjects[i]);
+        }
+    }
 }
-
-Subjects.$inject = ['$http'];
-
+Subjects.$inject = ['SubjectsService'];
 app.
     component('subjects', {
         templateUrl: './App/Views/Home/Menu/Subjects/Subjects.html',

@@ -22,41 +22,76 @@
     }
 
     .form-control {
-        margin-left:10px;
-        width:625px;
+        margin-left: 10px;
+        width: 625px;
     }
+
+    .myGrid2 {
+        width: 500px;
+        height: 180px;
+        margin-top: 5px;
+    }
+    .a {
+
+    }
+    .b {
+        float: right;
+        margin-top: -195px;
+        margin-right: 37px;
+    }
+
+    /*#myid {
+        text-align: right;
+    }*/
+
+
+
+
 </style>
 
 <div class="Index">
 
     <h2>Students Menu</h2>
-    <input class="btn btn-lg btn-primary btn-block" type="button" value="GetStudents" ng-click="vm.GetStudents()" style="width:200px" />
-    <input class="btn btn-lg btn-primary btn-block" type="button" value="ClearForm" ng-click="vm.ClearForm()" style="width:200px" />
 
-    <div>
+    
+   
+        <div class="a">
+            <input class="btn btn-lg btn-primary btn-block" type="button" value="GetStudents" ng-click="vm.GetStudents()" style="width:200px" />
+            <input class="btn btn-lg btn-primary btn-block" type="button" value="ClearForm" ng-click="vm.ClearForm()" style="width:200px" />
 
 
-        <form class="form-signin">
-            <input type="text" ng-model="vm.Dni" class="form-control" placeholder="Dni" required autofocus>
-            <input type="text" ng-model="vm.Name" class="form-control" placeholder="Name" required autofocus>
-            <input type="text" ng-model="vm.Email" class="form-control" placeholder="Email" required autofocus>
-            <input type="text" ng-model="vm.ChairNumber" class="form-control" placeholder="ChairNumber" required autofocus>
-            <div>
+            <form class="form-signin">
+                <input type="text"  ng-model="vm.Dni" class="form-control" placeholder="Dni"  required autofocus>
+                <input type="text"  ng-model="vm.Name" class="form-control" placeholder="Name" required autofocus>
+                <input type="text"  ng-model="vm.Email" class="form-control" placeholder="Email" required autofocus>
+                <input type="text"  ng-model="vm.ChairNumber" class="form-control" placeholder="ChairNumber" required autofocus>
+
+
                 <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.SaveStudent()" value="SaveStudent" style="        width: 200px" />
                 <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.DelStudent()" value="DelStudent" style="width:200px" />
                 <input class="btn btn-lg btn-primary btn-block" type="button" ng-click="vm.EditStudent()" value="EditStudent" style="width:200px" />
 
+            </form>
+            <div class="b">
+
+                <div class="myGrid2" ui-grid="vm.gridBOptions" ui-grid-selection></div>
             </div>
 
-        </form>
-
-
-        <!--<div ui-grid-selection class="myGrid" ui-grid="{ data: vm.Students}"></div>-->
-        <div>
-
-            <div class="myGrid" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-cellnav></div>
         </div>
 
+   
+    <!--<div ui-grid-selection class="myGrid" ui-grid="{ data: vm.Students}"></div>-->
+    <div>
+
+        <div class="myGrid" ui-grid="vm.gridAOptions" ui-grid-selection ui-grid-cellnav></div>
     </div>
+
+    <!--<div>
+
+        <div class="myGrid2" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-cellnav></div>
+    </div>-->
+
+
+
 
 </div>

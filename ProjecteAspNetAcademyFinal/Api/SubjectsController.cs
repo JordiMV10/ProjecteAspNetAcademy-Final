@@ -26,14 +26,25 @@ namespace ProjecteAspNetAcademyFinal.Api
 
         // GET: api/Subjects
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
+
+        public Task<List<Subject>> GetSubjects()
         {
-            var repo = Entity.DepCon.Resolve<IRepository<Subject>>();  //MEU OK
-            return await repo.QueryAll().ToListAsync();     //MEU OK
-
-
-            //return await _context.Subjects.ToListAsync();
+            return Task.Run(()=>
+            { 
+                var repo = Entity.DepCon.Resolve<IRepository<Subject>>();
+                return repo.QueryAll().ToList();
+            });
         }
+
+
+        //public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
+        //{
+        //    var repo = Entity.DepCon.Resolve<IRepository<Subject>>();  //MEU OK
+        //    return await repo.QueryAll().ToListAsync();     //MEU OK
+
+
+        //    //return await _context.Subjects.ToListAsync();
+        //}
 
         // GET: api/Subjects/5
         [HttpGet("{id}")]
