@@ -38,6 +38,19 @@
         this._isEdit = value;
     }
 
+
+    set SelectedRows(value)
+    {
+        this._selectedRows = value;
+    }
+
+    get SelectedRows()
+    {
+        var selectedRows = this.gridAOptions.gridApi.selection.getSelectedRows();
+
+        return selectedRows[0];
+    }
+
     
 
 
@@ -108,35 +121,43 @@
             subject.name = this.Name;
             subject.teacher = this.Teacher;
 
-            this.Http.put("api/subject/" + subject.id, subject).then((response) =>
+            //this.Http.put("api/subject/" + subject.id, subject).then((response) =>
+            this.SubjectsService.UpdateElementAsync(subject, (data) =>
             {
-                if (response.data.isSuccess === true)
+                if (data)
                 {
-                    this.GetSubjects();
-                    this.Name = "";
-                    this.Teacher = "";
-
-                    console.log("POST-ing of data successfully!");
-
-                }
-
-                else
-                {
-                    this.Errors.length = 0;
-
-                    for (let i in response.data.validation.errors)
+                    if (data.isSuccess)
                     {
-                        this.Errors.push({ errors: response.data.validation.errors[i] });
+                        this.GetSubjects();
+                        console.log("POST-ing of data successfully!");
+                        this.Name = "";
+                        this.Teacher = "";
+
+                        this.IsEdit = false;
                     }
+
+                    else
+                    {
+                        this.Errors.length = 0;
+
+                        for (let i in data.validation.errors)
+                        {
+                            this.Errors.push({ errors: data.validation.errors[i] });
+                        }
+
+                        this.GetSubjects();
+                        this.Name = "";
+                        this.Teacher = "";
+                        console.log("POST-ing of data failed");
+                    }
+
                 }
-            },
-                function errorCallback(response)
-                {
-                    console.log("POST-ing of data failed");
-                }
-            );
+            });
+            
 
             this.IsEdit = false;
+            console.log("end");
+
         }
 
         else 
@@ -182,58 +203,6 @@
     }
 
 
-    Eugeni()
-    {
-        SaveSubject(row)
-        {
-            if (!row.id)
-            {
-                var newSubject = new Subject(stName.value, stTeacher.value);
-                // or 
-                //var newSubject = new Subject(this.Name, this.Email, this.Dni, parseInt(this.ChairNumber));
-
-                this.SubjectService.AddElementAsync(newSubject, (data) =>
-                {
-                    if (data)
-                    {
-                        if (data.isSuccess)
-                        {
-                            this.RequestSubjects(); //this.gridOptions.data.push(data);
-                            console.log("POST-ing of data successfully!");
-                        }
-                        else
-                        {
-                            this.PrintErrors(data.validation.errors);
-                            console.log("POST-ing of data is failed!");
-                        }
-                    }
-                });
-            }
-            else
-            {
-                row.name = this.Name;
-                row.teacher = this.Teacher;
-
-                this.SubjectService.UpdateElementAsync(row, (data) =>
-                {
-                    if (data)
-                    {
-                        if (data.isSuccess)
-                        {
-                            this.RequestSubjects();
-                            console.log("PUT-ing of data successfully!");
-                        }
-                        else
-                        {
-                            this.PrintErrors(data.validation.errors);
-                            console.log("PUT-ing of data is failed!");
-                        }
-                    }
-                });
-            }
-            this.ClearSubject();
-        }
-    }
 
 
 
@@ -248,20 +217,42 @@
             var subject = new Subject();
             subject = this.SelectedRows;
 
-            this.Http.delete("api/subjects/" + subject.id).then((response) =>
+            this.SubjectsService.DeleteElementAsync(subject, (data) =>
             {
-                if (response.data.isSuccess === true)
+                if (data)
                 {
-                    this.GetSubjects();
-                    console.log("POST-ing of data successfully!");
+                    if (data.isSuccess)
+                    {
+                        this.GetSubjects();
+                        console.log("POST-ing of data successfully!");
+                        this.Name = "";
+                        this.Teacher = "";
+
+                        this.IsEdit = false;
+                    }
+
+                    else
+                    {
+                        this.Errors.length = 0;
+
+                        for (let i in data.validation.errors)
+                        {
+                            this.Errors.push({ errors: data.validation.errors[i] });
+                        }
+
+                        this.GetSubjects();
+                        this.Name = "";
+                        this.Teacher = "";
+                        console.log("POST-ing of data failed");
+                    }
 
                 }
-            },
-                function errorCallback(response)
-                {
-                    console.log("POST-ing of data failed");
-                }
-            );
+            });
+
+
+            this.IsEdit = false;
+            console.log("end");
+
 
         }
         else

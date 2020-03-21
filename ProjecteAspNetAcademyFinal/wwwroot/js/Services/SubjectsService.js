@@ -34,6 +34,37 @@
                 }
             );
     }
+
+    UpdateElementAsync(element, callbackAction)
+    {
+        this.Http.put("api/Subjects/" + element.id, element)
+
+            .then((response) =>
+            {
+                callbackAction(response.data);
+            },
+                function errorCallbach(response)
+                {
+                    console.log("PUT-ing of data failed");
+                }
+            );
+    }
+
+    DeleteElementAsync(element, callbackAction)
+    {
+        this.Http.delete("api/Subjects/" + element.id, element)
+
+            .then((response) =>
+            {
+                callbackAction(response.data);
+            },
+                function errorCallbach(response)
+                {
+                    console.log("DELETE-ing of data failed");
+                }
+            );
+    }
+
 }
 
 SubjectsService.$inject = ['$http'];
