@@ -145,7 +145,7 @@
                             this.Errors.push({ errors: data.validation.errors[i] });
                         }
 
-                        this.GetSubjects();
+                        this.GetSubjectsKeepingErrors();
                         this.Name = "";
                         this.Teacher = "";
                         console.log("POST-ing of data failed");
@@ -201,10 +201,6 @@
         }
 
     }
-
-
-
-
 
 
 
@@ -296,14 +292,30 @@
         this.Errors.splice(0, this.Errors.length);
     }
 
-
-    GetSubjects()
+    GetSubjectsKeepingErrors()
     {
         this.SubjectsService.GetAllAsync((data) =>
         {
             this.LoadSubjects(data);
         });
-        console.log ("end")
+        console.log("end")
+        this.IsEdit = false;
+
+    }
+
+
+
+    GetSubjects()
+    {
+        this.ClearForm();
+
+        this.SubjectsService.GetAllAsync((data) =>
+        {
+            this.LoadSubjects(data);
+        });
+        console.log("end")
+        this.IsEdit = false;
+
     }
 
 

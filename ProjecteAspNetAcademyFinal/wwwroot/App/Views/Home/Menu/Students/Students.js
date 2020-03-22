@@ -99,11 +99,12 @@
 
     Students = [];
     Errors = [];
-    constructor($http)
+    constructor(StudentsService)
     {
+        this.StudentsService = StudentsService;
+
         this._students = [];
         this._errors = [];
-        this.Http = $http;
         this.IsEdit = false;
         this.Dni = "";
         this.Name = "";
@@ -146,6 +147,58 @@
 
 
 
+
+    ClearErrors()
+    {
+        this.Errors.splice(0, this.Errors.length);
+    }
+
+
+    ClearForm()
+    {
+        this.Dni = "";
+        this.Name = "";
+        this.Email = "";
+        this.ChairNumber = null;
+        this.IsEdit = false;
+        this.ClearErrors();
+    }
+
+    GetStudentsKeepingErrors()
+    {
+        this.StudentsService.GetAllAsync((data) =>
+        {
+            this.LoadStudents(data);
+        });
+        console.log("end")
+        this.IsEdit = false;
+
+    }
+
+
+    GetStudents()
+    {
+        this.ClearForm();
+        this.StudentsService.GetAllAsync((data) =>
+        {
+            this.LoadStudents(data);
+        });
+        console.log("end")
+        this.IsEdit=false;
+
+    }
+
+
+    LoadStudents(students)
+    {
+        this.Students.length = 0;
+        for (let i = 0; i < students.length; i++)
+        {
+            this.Students.push(students[i]);
+        }
+    }
+
+
     SaveStudent()
     {
         this.ClearErrors();
@@ -160,110 +213,91 @@
             student.email = this.Email;
             student.chairNumber = this.ChairNumber;
 
-            this.Http.put("api/students/" + student.id, student).then((response) =>
+            this.StudentsService.UpdateElementAsync(student, (data) =>
             {
-                if (response.data.isSuccess === true)
+                if (data)
                 {
-                    this.GetStudents();
-                    this.Dni = "";
-                    this.Name = "";
-                    this.Email = "";
-                    this.ChairNumber = null;
-
-                    console.log("POST-ing of data successfully!");
-
-                }
-
-                else
-                {
-                    this.Errors.length = 0;
-
-                    for (let i in response.data.validation.errors)
+                    if (data.isSuccess)
                     {
-                        this.Errors.push({ errors: response.data.validation.errors[i] });
+                        this.GetStudents();
+                        console.log("POST-ing of data successfully!");
+                        this.Dni = "";
+                        this.Name = "";
+                        this.Email = "";
+                        this.ChairNumber = null;
+
+                        this.IsEdit = false;
                     }
+
+                    else
+                    {
+                        this.Errors.length = 0;
+
+                        for (let i in data.validation.errors)
+                        {
+                            this.Errors.push({ errors: data.validation.errors[i] });
+                        }
+
+                        this.GetStudentsKeepingErrors();
+                        this.Dni = "";
+                        this.Name = "";
+                        this.Email = "";
+                        this.ChairNumber = null;
+
+                        console.log("POST-ing of data failed");
+                    }
+
                 }
-            },
-                function errorCallback(response)
-                {
-                    console.log("POST-ing of data failed");
-                }
-            );
+            });
+
 
             this.IsEdit = false;
+            console.log("end");
+
         }
 
         else 
         {
             //On Add
             var student = new Student(this.Dni, this.Name, this.Email, this.ChairNumber);
-
-            this.Http.post("api/students", student).then((reponse) =>
+            this.StudentsService.AddElementAsync(student, (data) =>
             {
-                if (reponse.data.isSuccess === true)  
+                if (data)
                 {
-                    this.GetStudents();
-                    this.Dni = "";
-                    this.Name = "";
-                    this.Email = "";
-                    this.ChairNumber = null;
-                    console.log("POST-ing of data successfully!");
-                    this.IsEdit = false;
-                }
-
-                else
-                {
-                    this.Errors.length = 0;
-
-                    for (let i in reponse.data.validation.errors)
+                    if (data.isSuccess)
                     {
-                        this.Errors.push({ errors: reponse.data.validation.errors[i] });
-                    }
-                }
+                        this.GetStudents();
+                        console.log("POST-ing of data successfully!");
+                        this.Dni = "";
+                        this.Name = "";
+                        this.Email = "";
+                        this.ChairNumber = null;
 
-            },
-            function errorCallback(response)
-            {
-                console.log("POST-ing of data failed");
+                        this.IsEdit = false;
+                    }
+
+                    else
+                    {
+                        this.Errors.length = 0;
+
+                        for (let i in data.validation.errors)
+                        {
+                            this.Errors.push({ errors: data.validation.errors[i] });
+                        }
+
+                        console.log("POST-ing of data failed");
+                    }
+
+                }
 
             });
+
             this.IsEdit = false;
+            console.log("end");
+
+
         }
 
-
-    }
-
-    DelStudent()
-    {
-        this.ClearForm();
-
-        if (this.SelectedRows != undefined)
-        {
-            var student = new Student();
-            student = this.SelectedRows;
-
-            this.Http.delete("api/students/" + student.id).then((response) =>
-            {
-                if (response.data.isSuccess === true)
-                {
-                    this.GetStudents();
-                    console.log("POST-ing of data successfully!");
-
-                }
-            },
-                function errorCallback(response)
-                {
-                    console.log("POST-ing of data failed");
-                }
-            );
-
-        }
-        else
-        {
-            alert("You have not selected row");
-        }
-
-        this.IsEdit = false;
     }
 
 
@@ -286,58 +320,70 @@
 
         this.IsEdit = true;
 
-
     }
 
-    GetStudents()
+
+    DelStudent()
     {
-        this.ClearErrors();
-        this.Http.get("api/students").then((response) =>
+        this.ClearForm();
+
+        if (this.SelectedRows != undefined)
         {
-            this.Students.length = 0;
-            response.data.forEach((student) =>
+            var student = new Student();
+            student = this.SelectedRows;
+
+            this.StudentsService.DeleteElementAsync(student, (data) =>
             {
-                this.Students.push(student);
+                if (data)
+                {
+                    if (data.isSuccess)
+                    {
+                        this.GetStudents();
+                        console.log("POST-ing of data successfully!");
+                        this.Dni = "";
+                        this.Name = "";
+                        this.Email = "";
+                        this.ChairNumber = null;
+
+                        this.IsEdit = false;
+                    }
+
+                    else
+                    {
+                        this.Errors.length = 0;
+
+                        for (let i in data.validation.errors)
+                        {
+                            this.Errors.push({ errors: data.validation.errors[i] });
+                        }
+
+                        this.GetStudents();
+                        this.Dni = "";
+                        this.Name = "";
+                        this.Email = "";
+                        this.ChairNumber = null;
+                        console.log("POST-ing of data failed");
+                    }
+
+                }
             });
-        })
 
-        this.IsEdit=false;
-    }
 
-    ClearForm()
-    {
-        this.Dni = "";
-        this.Name = "";
-        this.Email = "";
-        this.ChairNumber = null;
+            this.IsEdit = false;
+            console.log("end");
+
+
+        }
+        else
+        {
+            alert("You have not selected row");
+        }
+
         this.IsEdit = false;
-        this.ClearErrors();
-        
+
     }
 
-    ClearErrors()
-    {
-        this.Errors.splice(0, this.Errors.length);
-    }
-    //public void ChairStringToInt()
-    //{
-    //    var chairVR = Student.ValidateChairNumber(ChairTextVM);
-    //    if (!chairVR.IsSuccess)
-    //    {
-    //        ErrorsList = chairVR.Errors.Select(x => new ErrorMessage() { Message = x }).ToList();
-    //        CurrentStudent = null;
-    //        DniVM = "";
-    //        NameVM = "";
-    //        ChairTextVM = "";
-    //        EmailVM = "";
-    //    }
 
-    //    else
-    //    {
-    //        ChairNumberVM = chairVR.ValidatedResult;
-    //    }
-
-    //}
 
 
 
@@ -345,8 +391,7 @@
 
 }
 
-Students.$inject = ['$http'];
-
+Students.$inject = ['StudentsService'];
 
 app.
     component('students', {

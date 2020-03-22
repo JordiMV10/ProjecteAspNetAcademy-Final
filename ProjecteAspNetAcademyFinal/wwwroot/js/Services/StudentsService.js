@@ -1,4 +1,4 @@
-﻿class SubjectsService
+﻿class StudentsService
 {
     constructor($http)
     {
@@ -8,7 +8,7 @@
 
     GetAllAsync(callbackAction)
     {
-        this.Http.get("api/Subjects")
+        this.Http.get("api/Students")
             .then((response) =>
             {
                 callbackAction(response.data);
@@ -23,7 +23,7 @@
 
     AddElementAsync(element, callbackAction)
     {
-        this.Http.post("/api/Subjects", element)
+        this.Http.post("/api/Students", element)
             .then((response) =>
             {
                 callbackAction(response.data);
@@ -37,7 +37,7 @@
 
     UpdateElementAsync(element, callbackAction)
     {
-        this.Http.put("api/Subjects/" + element.id, element)
+        this.Http.put("api/Students/" + element.id, element)
 
             .then((response) =>
             {
@@ -52,7 +52,7 @@
 
     DeleteElementAsync(element, callbackAction)
     {
-        this.Http.delete("api/Subjects/" + element.id, element)
+        this.Http.delete("api/Students/" + element.id, element)
 
             .then((response) =>
             {
@@ -67,6 +67,5 @@
 
 }
 
-SubjectsService.$inject = ['$http'];
-app.service('SubjectsService', SubjectsService);
-
+StudentsService.$inject = ['$http'];
+app.service('StudentsService', StudentsService);

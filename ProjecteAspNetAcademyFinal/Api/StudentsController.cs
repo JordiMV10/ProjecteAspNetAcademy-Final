@@ -44,15 +44,25 @@ namespace ProjecteAspNetAcademyFinal.Api
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+
+        public Task<List<Student>> GetStudents()
         {
-            var repo = Entity.DepCon.Resolve<IRepository<Student>>();  //MEU OK
-            return await repo.QueryAll().ToListAsync();     //MEU OK
-
-
-
-            //return await _context.Students.ToListAsync();  //Original
+            return Task.Run(() =>
+            {
+                var repo = Entity.DepCon.Resolve<IRepository<Student>>();
+                return repo.QueryAll().ToList();
+            });
         }
+
+        //public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        //{
+        //    var repo = Entity.DepCon.Resolve<IRepository<Student>>();  //MEU OK
+        //    return await repo.QueryAll().ToListAsync();     //MEU OK
+
+
+
+        //    //return await _context.Students.ToListAsync();  //Original
+        //}
 
         // GET: api/Students/5
         [HttpGet("{id}")]
@@ -83,33 +93,6 @@ namespace ProjecteAspNetAcademyFinal.Api
                 return student.Save();
             });
 
-
-
-
-            //if (id != student.Id)
-            //{
-            //    return BadRequest();
-            //}
-
-            //_context.Entry(student).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!StudentExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return NoContent();
         }
 
         // POST: api/Students
